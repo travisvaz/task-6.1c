@@ -21,10 +21,12 @@ pipeline{
                 echo "Integration tests"
                 echo "Running Selenium, Postman, SoapUI, Cypress, Apache JMeter"
                 echo"Test started and completed"
+                sh 'echo "artifact file" > generatedFile.txt'
             }
             	post {
                     always {
-                        emailext body: 'Unit and Integration tests have been sucessfully completed ${BUILD_LOG, maxLines=9999, escapeHtml=false}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Test Stage Completed Sucessfully'
+                        archiveArtifacts artifacts: 'generatedFile.txt', onlyIfSuccessful: true
+                        emailext attachLog: true, attachmentsPattern: 'generatedFile.txt', body: 'Unit and Integration tests have been sucessfully completed ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Test Stage ${currentBuild.currentResult}: Job ${env.JOB_NAME}'
                     }
                 }
         }
@@ -38,10 +40,12 @@ pipeline{
             steps{
                 echo "Performing a security scan using ZAP"
                 echo"Security scan check started and completed"
+                sh 'echo "artifact file" > generatedFile.txt'
             }
             post {
                 always {
-                    emailext body: 'Security Scan has been sucessfully completed ${BUILD_LOG, maxLines=9999, escapeHtml=false}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Security Scan Stage Completed Sucessfully'
+                    archiveArtifacts artifacts: 'generatedFile.txt', onlyIfSuccessful: true
+                    emailext attachLog: true, attachmentsPattern: 'generatedFile.txt', body: 'Security Scan has been sucessfully completed ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Security Scan Stage ${currentBuild.currentResult}: Job ${env.JOB_NAME}'
                 }
             }
         }
