@@ -3,7 +3,7 @@ pipeline{
     environment {
         TESTING_ENVIRONMENT="AWS EC2 Instance300"
         PRODUCTION_ENVIRONMENT="AWS EC2 Instance"
-    }
+    
     stages{
         stage("Build"){
             steps{
