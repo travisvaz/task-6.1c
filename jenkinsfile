@@ -39,12 +39,11 @@ pipeline{
             steps{
                 echo "Performing a security scan using ZAP"
                 echo"Security scan check started and completed"
-                sh 'echo "artifact file" > generatedFile.txt'
             }
             post {
                 always {
-                    archiveArtifacts artifacts: 'generatedFile.txt', onlyIfSuccessful: true
-                    emailext attachLog: true, attachmentsPattern: 'generatedFile.txt', body: 'Security Scan has been sucessfully completed ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Security Scan Stage ${currentBuild.currentResult}: Job ${env.JOB_NAME}'
+
+                    emailext attachLog: true, body: 'Security Scan has been sucessfully completed ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Security Scan Stage Sucessful'
                 }
             }
         }
