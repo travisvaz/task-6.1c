@@ -2,7 +2,7 @@ pipeline{
     agent any
     environment {
         TESTING_ENVIRONMENT="AWS EC2 Instance1"
-        PRODUCTION_ENVIRONMENT="AWS EC2 Instance2"
+        PRODUCTION_ENVIRONMENT="AWS EC2 Instance21"
     }
     stages{
         stage("Build"){
