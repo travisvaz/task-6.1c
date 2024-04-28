@@ -24,7 +24,7 @@ pipeline{
             }
             	post {
                     always {
-                        emailext body: 'Unit and Integration tests have been sucessfully completed ${BUILD_LOG, maxLines, escapeHtml}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Test Stage Completed Sucessfully'
+                        emailext body: 'Unit and Integration tests have been sucessfully completed ${BUILD_LOG, maxLines=9999, escapeHtml=false}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Test Stage Completed Sucessfully'
                     }
                 }
         }
@@ -41,7 +41,7 @@ pipeline{
             }
             post {
                 always {
-                    emailext body: 'Security Scan has been sucessfully completed ${BUILD_LOG, maxLines, escapeHtml}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Security Scan Stage Completed Sucessfully'
+                    emailext body: 'Security Scan has been sucessfully completed ${BUILD_LOG, maxLines=9999, escapeHtml=false}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Security Scan Stage Completed Sucessfully'
                 }
             }
         }
