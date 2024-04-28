@@ -1,0 +1,58 @@
+pipeline{
+    agent any
+    environment {
+        TESTING_ENVIRONMENT="AWS EC2 Instance"
+        PRODUCTION_ENVIRONMENT="AWS EC2 Instance"
+    }
+    stages{
+        stage("Build"){
+            steps{
+                echo "Fetching source code from GitHub"
+                echo "Starting automated build using Maven"
+                echo "Validating source code and configuration files"
+                echo "Compiling the source Code"
+                echo"Build started and completed"
+            }
+        }
+        stage("Test"){
+            steps{
+                echo "Unit tests"
+                echo "Running JUnit, NUnit, Pytest, Mocha, Rspec"
+                echo "Integration tests"
+                echo "Running Selenium, Postman, SoapUI, Cypress, Apache JMeter"
+                echo"Test started and completed"
+            }
+        }
+        stage("Code Quality Analysis"){
+            steps{
+                echo "Analysing the quality of code using SonarQube"
+                echo"Code quality analysis check started and completed"
+            }
+        }
+        stage("Security Scan"){
+            steps{
+                echo "Performing a security scan using ZAP"
+                echo"Security scan check started and completed"
+            }
+        }
+        stage("Deploy to staging"){
+            steps{
+                echo "Deploying the application to staging server $TESTING_ENVIRONMENT"
+                echo"Deploy started and completed"
+            }
+        }
+        stage("Integration Tests on Staging"){
+            steps{
+                echo "Running integration tests on staging environment"
+                echo "Application functions as expected"
+                echo"Integration tests on Staging started and completed"
+            }
+        }
+        stage("Deploy to Production"){
+            steps{
+                echo "Deploying the application to production server $PRODUCTION_ENVIRONMENT"
+                echo"Deploy to Production started and completed"
+            }
+        }
+    }
+}
