@@ -1,9 +1,9 @@
 pipeline{
     agent any
     environment {
-        TESTING_ENVIRONMENT="AWS EC2 Instance300"
+        TESTING_ENVIRONMENT="AWS EC2 Instance"
         PRODUCTION_ENVIRONMENT="AWS EC2 Instance"
-    
+    }
     stages{
         stage("Build"){
             steps{
@@ -22,6 +22,11 @@ pipeline{
                 echo "Running Selenium, Postman, SoapUI, Cypress, Apache JMeter"
                 echo"Test started and completed"
             }
+            	post {
+                    always {
+                        emailext body: 'Unit and Integration tests have been sucessfully completed ${BUILD_LOG, maxLines, escapeHtml}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Test Stage Completed Sucessfully'
+                    }
+                }
         }
         stage("Code Quality Analysis"){
             steps{
@@ -33,6 +38,11 @@ pipeline{
             steps{
                 echo "Performing a security scan using ZAP"
                 echo"Security scan check started and completed"
+            }
+            post {
+                always {
+                    emailext body: 'Security Scan has been sucessfully completed ${BUILD_LOG, maxLines, escapeHtml}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Security Scan Stage Completed Sucessfully'
+                }
             }
         }
         stage("Deploy to staging"){
@@ -55,9 +65,5 @@ pipeline{
             }
         }
     }
-	post {
-        always {
-            emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], 	[$class: 'RequesterRecipientProvider']], subject: 'Test'
-        }
-    }
+
 }
